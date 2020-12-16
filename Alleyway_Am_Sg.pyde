@@ -11,31 +11,26 @@ n_Steine = nRows * nCols;
 Steine_Breite = 30;
 Steine_Hoehe = 10;
 
-Stein_x = 15;
-Stein_y = 10;
 
 Ball_r = 16;
 Schieber_r = 15;
-v2 = PVector(100, 300)
-velocity2 = PVector(5, 5)
-v1 = PVector(200, 100)
+v1 = PVector(200, 100) # Startpunkt des Spielballs
 velocity = PVector(2, 2) # Geschwindigkeit des Spielballs
-v2 = PVector(300, 300)
-velocity2 = PVector(5, 5)
-v3 = (0,0)
+v2 = PVector(300, 300) # Startpunkt des Schiebers
+velocity2 = PVector(5, 5) # Geschwindigkeit des Schiebers
+v3 = PVector (100, 100) # Steine
 
 def setup():
   size (600, 400);
-  smooth();
   background(0, 80, 125)
   global f
-  f = createFont("Arial",16)
-  #Zufallszahlen für die Startposition des Balls
+  f = createFont("Arial",16) 
+  global g_hit
+  g_hit = False 
 
 
 def draw():
     global f
-    background(255)
     textFont(f,44)            
     fill(0)
     rect(0,0,width,height); 
@@ -49,12 +44,23 @@ def draw():
 
     if v1.y < 0:
         velocity.y = velocity.y * -1;
+        
+    # Vektor in die richtige Richtung zurück spicken
+    if v1.x - v2.x > 30 and PVector.dist(v1,v2) <= Ball_r+Schieber_r:
+        velocity.x = velocity.x * -1; 
     
-    if v1.x - v2.x > 30 and PVector.dist(v1,v2) < Ball_r+Schieber_r:
-        velocity.x = velocity.x * -1;
-    
-    if v1.x - v2.x < 30 and PVector.dist(v1,v2) < Ball_r+Schieber_r:
+    if v1.x - v2.x < 30 and PVector.dist(v1,v2) <= Ball_r+Schieber_r:
         velocity.y = velocity.y * -1;
+        
+
+    if v1.x - v3.x > 5 and PVector.dist(v1,v3) <= Ball_r+Steine_Breite:
+        velocity.x = velocity.x * -1 
+    
+    
+    if v1.x - v3.x < 5 and PVector.dist(v1,v3) <= Ball_r+Steine_Hoehe:
+        velocity.y = velocity.y * -1 
+    
+
           
 #Ball fällt runter
     if v1.y >= height:
@@ -70,16 +76,32 @@ def draw():
             v2.x += 5
 
 #die Backsteine
-
+    if v1.x - v3.x > 5 and PVector.dist(v1,v3) <= Ball_r+Steine_Breite:
+        g_hit == True
+    
+    if v1.x - v3.x < 5 and PVector.dist(v1,v3) <= Ball_r+Steine_Hoehe:
+        g_hit == True
+        
+    if g_hit == True:
+        fill (0)
+        rect (v3.x, v3.y, Steine_Breite, Steine_Hoehe)
+        
+    else:
+        fill (175)
+        rect (v3.x, v3.y, Steine_Breite, Steine_Hoehe)
+    
             
     
 #Anzeige
+    rect (v3.x, v3.y, Steine_Breite, Steine_Hoehe)
     stroke(0);
     fill(200);
     ellipse(v2.x, v2.y, Schieber_r*2, Schieber_r*2);                
     stroke(0);
     fill(175);
     ellipse(v1.x,v1.y,Ball_r,Ball_r);
-    
+
+ 
+
 
       
