@@ -1,14 +1,5 @@
-# Number of columns and rows in the grid
-nCols = 10;
-nRows = 10;
-n_Steine = nRows * nCols;
-
-
 Steine_Breite = 30;
 Steine_Hoehe = 10;
-
-
-
 
 Ball_r = 16;
 Schieber_r = 15;
@@ -28,9 +19,6 @@ def touch (value):
     global t
     t = value
 t = False
-
-  
-
 
 
 def draw():
@@ -98,7 +86,6 @@ def draw():
 # print (t); um zu überprüfen    
     
 #Anzeige
-    #rect (v3.x, v3.y, Steine_Breite, Steine_Hoehe)
     fill(200);
     ellipse(v2.x, v2.y, Schieber_r*2, Schieber_r*2);                
     fill(175);
