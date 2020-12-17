@@ -94,7 +94,8 @@ def Steinezeichnen():
     for i in xrange(num_Steine_y):
         # leere Liste für jede Reihe
         raster.append([])
-        for j in xrange(num_Steine_x)
+        for j in xrange(num_Steine_x):
+            # Pad each column in each row with a 0
             raster[i].append(0)
     return raster    
 
